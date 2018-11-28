@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import giphy from 'giphy-api';
 
 import SearchBar from './search_bar.jsx';
 import Gif from './gif.jsx';
 import GifList from './gif_list.jsx';
-import giphy from 'giphy-api';
 
 class App extends Component {
   constructor(props) {
@@ -11,19 +11,24 @@ class App extends Component {
 
     this.state = {
       gifs: [],
-      selectedGifId: "lyxZEKUSpYeMU",
-    }
+      selectedGifId: "bbB45UPcelAL9qUVsl",
+    };
   }
 
   search = (query) => {
     giphy('GjWVY0tXGTjpB6F2hhbPaxe1Yh3Jv2xl').search({
       q: query,
-      rating: 'g',
       limit: 10,
     }, (err, res) => {
       this.setState({
         gifs: res.data
       });
+    });
+  }
+
+  displayGif = (id) => {
+    this.setState({
+      selectedGifId: id
     });
   }
 
@@ -37,7 +42,7 @@ class App extends Component {
           </div>
         </div>
         <div className="right-scene">
-          <GifList gifs={this.state.gifs}/>
+          <GifList gifs={this.state.gifs} displayGif={this.displayGif} />
         </div>
       </div>
     );
